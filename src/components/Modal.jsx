@@ -23,7 +23,11 @@ const modulRoot = document.querySelector('#modal-root');
                 </Backdrop>
             </>,modulRoot)
            
-        
+       
     }
 };
- 
+ // <div class="overlay">
+ // <div class="modal">
+ //   <img src="" alt="" />
+ // </div>
+//</div>
