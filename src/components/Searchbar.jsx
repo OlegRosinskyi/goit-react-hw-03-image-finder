@@ -10,7 +10,7 @@ export class Searchbar extends Component
         imageName: '',
     }
 //componentDidMount() {console.log('componentDidMount Searchbar') };
-    componentDidUpdate() { console.log('componentDidUpdate Searchbar') };
+  //  componentDidUpdate() { console.log('componentDidUpdate Searchbar') };
 
     hendleSubmit = (event) => {
         event.preventDefault();
@@ -46,12 +46,4 @@ export class Searchbar extends Component
         
      )}
 }
- //<input
- //                       type="text"
- //                       name="name"
- //                       pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
- //                       title="Name may contain only letters, apostrophe, dash and spaces."
- //                       required
- //                       onChange={this.searchImage}
- //                       //value={value}
-  //                  />
+ 

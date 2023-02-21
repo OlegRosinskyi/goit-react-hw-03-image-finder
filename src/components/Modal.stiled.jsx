@@ -17,17 +17,17 @@ export const Backdrop = styled.div `display: flex;
     background: rgba(0, 0, 0, 0.2);
   //  transition: opacity 250ms, visibility 250ms;
     `
-    export const ModalWindous = styled.div `position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    export const ModalWindous = styled.div `//position: absolute;
+   // top: 50%;
+   // left: 50%;
+   // transform: translate(-50%, -50%);
 
-    padding: 48px 20px; 
-    width: 280px;
+    //padding: 48px 20px; 
+    width: auto;
 
     background-color: #FFFFFF;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
     border-radius: 4px;
 
-    height: 100vh;
-    overflow-y: scroll;`
+    height: auto;
+   // overflow-y: scroll;`

@@ -1,51 +1,54 @@
 import { Component } from "react";
 import { Modal } from "./Modal";
-import Button from "./Button";
+
 import { Searchbar } from "./Searchbar";
 import { ImageGallery } from "./ImageGallery";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { Container } from "./App.stiled";
 
 export class App extends Component {
   state = {
     imageName:'',
     showModal: false,  
-   // id: '',
+    //activId: '',
+    articls:{},
    // webformatURL: '',
    // largeImageURL:'',
   }
-  toogleModal = () => { 
-      this.setState((prevStat) => ({ showModal: !prevStat.showModal, }))
-  }; 
   
-  updateImage = imageName => {
-    
-    // console.log(imageName);
-    //let nowArr = this.state.contacts;
-    //let arrLength = nowArr.length;
-    //let Contact = { searchWord: `${data.searchWord}`, };
-    this.setState({ imageName});
-    // console.log(Contact);
-   // let statusIncludeName = nowArr.find(contact => contact.name === Contact.name);
-   // console.log(statusIncludeName); console.log(Contact);
-   // arrLength > 1 ? (!statusIncludeName ? nowArr.splice(arrLength, 0, Contact,) : alert(`${data.name}  is already in contacts`)) :
-   //   (nowArr[0].name === '' ? nowArr.splice(arrLength - 1, 1, Contact,) : (!statusIncludeName ? nowArr.splice(arrLength, 0, Contact,) : alert(`${data.name}  is already in contacts`)))
-   // this.setState({ contacts: nowArr });
-  }
   componentDidMount() {console.log('componentDidMount App') };
-  componentDidUpdate() { console.log('componentDidUpdate App') };
+  componentDidUpdate(prevProps) {
+    console.log('componentDidUpdate App')
+    if (prevProps.imageName !== this.props.imageName) {
+            console.log('componentDidUpdate App Новий запит'); 
+            this.setState({ activId: '',articls: [], }); 
+    }
+  };
+  
+  toogleModal = () => { 
+   this.setState((prevStat) => ({ showModal: !prevStat.showModal, }))
+    //this.setState({ articls: {}, })
+  }; 
+  updateId = (showModal,articls) => {
+    //Збереження в state пошукового слова запиту на пошук картинки.
+       this.setState({ showModal,articls,});
+      }
+  updateImage = imageName => {
+    //Збереження в state пошукового слова запиту на пошук картинки.
+       this.setState({ imageName});
+  }
+  
   render() {
-    //viev = 
+    console.log(this.state.articls);
     return (
-      <div>
+      <Container>
+        <Searchbar onSubmit={this.updateImage}></Searchbar>      
+        <ImageGallery imageName={this.state.imageName} onClikeImage={this.updateId}></ImageGallery>
+        {this.state.showModal && <Modal onClose={this.toogleModal}> <img src={this.state.articls.largeImageURL} alt="" /> </Modal>}
        
-        <Searchbar onSubmit={this.updateImage}></Searchbar>
-             
-        <ImageGallery imageName={this.state.imageName} ></ImageGallery>
-         {this.state.showModal && <Modal onClose={this.toogleModal}> <h2>Всім привіт</h2> <p>dddddddddddddddddddddddddd</p> </Modal>}
-        <Button />
         <ToastContainer/>
-      </div>
+      </Container>
     );
   }
 };

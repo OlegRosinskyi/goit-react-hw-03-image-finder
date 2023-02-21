@@ -10,8 +10,8 @@ const modulRoot = document.querySelector('#modal-root');
  
         componentDidMount() {console.log('componentDidMount Modal'); window.addEventListener('keydown', this.handleKeydown)};
         componentWillUnmount() {console.log('componentWillUnmount Modal'); window.removeEventListener('keydown', this.handleKeydown)};
- handleKeydown  = event => { if (event.code === 'Escape') { console.log('{Закриття модалки}'); this.props.onClose(); }}     
- handleBackdropClick = event =>  { if (event.target === event.currentTarget) { console.log('{Click in Backdrop}'); this.props.onClose(); }} 
+        handleKeydown  = event => { if (event.code === 'Escape') { console.log('{Закриття модалки}'); this.props.onClose(); }}     
+        handleBackdropClick = event =>  { if (event.target === event.currentTarget) { console.log('{Click in Backdrop}'); this.props.onClose(); }} 
    // console.log(contacts)
    // let filtrContacts = contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()));
   //  if (filtrContacts.length === 0) filtrContacts = []; 
