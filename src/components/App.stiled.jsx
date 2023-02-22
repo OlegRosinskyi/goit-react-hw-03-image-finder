@@ -1,8 +1,24 @@
 import styled from "styled-components";
 export const Container =
-    styled.div   ` display:flex; flex-direction:column; justify-content:center; 
+    styled.div   ` display:flex; flex-direction:column; 
   width: 1200px;
- // width: 100%;
+ @media screen and (min-width: 320px) {
+    max-width: 320px;
+    padding: 20px;
+   
+  }
+
+  @media screen and (min-width: 768px) {
+    max-width: 768px;
+    padding: 60px 30px;
+   
+  }
+
+  @media screen and (min-width: 1280px) {
+    max-width: 1280px;
+    padding: 60px 30px;
+  
+  }
   padding-left: 15px;
   padding-right: 15px;
   margin-left: auto;

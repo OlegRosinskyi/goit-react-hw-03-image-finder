@@ -4,6 +4,7 @@ import axiosImages from "./axiosImages";
 import { ImageGalleryStiled } from "./ImageGallery.stiled";
 import { Button } from "./Button";
 import Loader from "./Loader";
+import { BoxButton } from "./ImageGallery.stiled";
 const namberPerPage = 12;
 
 export class ImageGallery extends Component{
@@ -16,19 +17,21 @@ export class ImageGallery extends Component{
         erros: null,
         status: 'idle', //початковий стан простою
     }
-    componentDidMount() { console.log('componentDidMount ImageGallery') };
-    componentWillUnmount(){ console.log('componentWillUnmount ImageGallery') };
+    componentDidMount() { console.log('componentDidMount ImageGallery'); this.setState({ status: 'idle', }); };
+    componentWillUnmount() {
+        console.log('componentWillUnmount ImageGallery'); this.setState({ status: 'idle', });
+    }
     componentDidUpdate(prevProps,prevState) { 
         console.log('componentDidUpdate ImageGallery')
         //if (prevState.status !== this.state.status) {
         if (prevProps.imageName !== this.props.imageName) {
             console.log('Новий запит'); 
-            this.setState({ pageTotal: 0,articls: [], activID:'',showModal: false,status:'idle', erros: null,}); //стан loading //namberPage: 1,
+            this.setState({ pageTotal: 0,articls: [], activID:'',showModal: false,status: 'idle', erros: null,}); //стан loading //namberPage: 1,
             this.searchImage(this.props.imageName, this.state.namberPage, namberPerPage);
         }
         if (prevState.namberPage !== this.state.namberPage) {
             console.log('Зміна сторінки'); 
-            this.setState({ activID:'',status:'idle',}); 
+            this.setState({ activID:'',status: 'idle'}); 
             this.searchImage(this.props.imageName, this.state.namberPage, namberPerPage);
         }
         if (prevState.activID !== this.state.activID) {
@@ -83,17 +86,17 @@ export class ImageGallery extends Component{
     resetSearchImage = () => { this.setState({ imageName: '', }); };
 
     render() {
-        if (this.state.status === 'idle'){return <div><h2>Для пошуку картинки введить в поле пошуку назву картинки</h2></div> };   
-        if (this.state.status === 'pending') { return <div><Loader></Loader></div> };
+        if (this.state.status === 'idle'){return <BoxButton><h2>Для пошуку картинки введить в поле пошуку назву картинки</h2></BoxButton> };   
+        if (this.state.status === 'pending') { return <BoxButton><Loader></Loader></BoxButton> };
         
         if (this.state.status === 'resolved'){
             return (
-            Number(this.state.articls.length) === 0?<div> <h2>Пошук картинки по слову  {this.props.imageName} не два результату</h2></div>:
+            Number(this.state.articls.length) === 0?<BoxButton> <h2>Пошук картинки по слову  {this.props.imageName} не два результату</h2></BoxButton>:
             <div> 
             <ImageGalleryStiled onClick={this.lookImage}>
                 <ImageGalleryItems datas={this.state.articls}></ImageGalleryItems>
             </ImageGalleryStiled>
-            {(this.state.namberPage !== this.state.pageTotal && this.state.articls.length !== 0)&& <Button namberPage={this.state.namberPage}  imageName={this.props.imageName}  onClike={this.updateNamberPage}/>}
+            {(this.state.namberPage !== this.state.pageTotal && this.state.articls.length !== 0)&&<BoxButton><Button namberPage={this.state.namberPage}  imageName={this.props.imageName}  onClike={this.updateNamberPage}/></BoxButton> }
             </div>
         )
         };

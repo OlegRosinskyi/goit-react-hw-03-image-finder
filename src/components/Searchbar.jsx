@@ -3,6 +3,7 @@ import {AiOutlineSearch} from "react-icons/ai";
 import { SearchbarInput } from "./Searchbar.stiled";
 import { SearchbarBox } from "./Searchbar.stiled";
 import { SearchbarForm } from "./Searchbar.stiled";
+import { Searchbarbutton } from "./Searchbar.stiled";
 import { toast } from "react-toastify";
 export class Searchbar extends Component
 {
@@ -27,21 +28,19 @@ export class Searchbar extends Component
         
             <SearchbarBox>
             <SearchbarForm onSubmit={this.hendleSubmit}>
-                <button type="submit" className="button" >
+                <Searchbarbutton type="submit">
                     <span className="button-label"><AiOutlineSearch/></span>
-                </button>
+                </Searchbarbutton>
 
                 <SearchbarInput
                    
                 className="input"
                 type="text"
                 autocomplete="off"
-                autofocus
-                    placeholder="Search images and photos"
-                    value={this.state.imageName}
-                onChange={this.searchImage}
-                        
-            />
+                placeholder="Search images and photos"
+                value={this.state.imageName}
+                onChange={this.searchImage}        
+                />
             </SearchbarForm>
         </SearchbarBox>  
         

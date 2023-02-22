@@ -10,8 +10,8 @@ export class App extends Component {
   state = {
     imageName:'',
     showModal: false,  
-    articls: {},
-    activId: '',
+    articls: [{}],
+   // activId: '',
   }
   componentDidMount() { console.log('componentDidMount App') };
   componentWillUnmount(){ console.log('componentWillUnmount App') };
@@ -19,7 +19,7 @@ export class App extends Component {
     console.log('componentDidUpdate App')
     if (prevProps.imageName !== this.props.imageName) {
             console.log('componentDidUpdate App Новий запит'); 
-            this.setState({ activId: '',articls: [], }); 
+            this.setState({ articls: [{}] }); 
     }
   };
   
@@ -41,9 +41,8 @@ export class App extends Component {
     return (
       <Container>
         <Searchbar onSubmit={this.updateImage}></Searchbar> 
-       
-        <ImageGallery imageName={this.state.imageName} onClikeImage={this.updateId}></ImageGallery>
-        {this.state.showModal && <Modal onClose={this.toogleModal}> <img src={this.state.articls.largeImageURL} alt="" /> </Modal>}
+            <ImageGallery imageName={this.state.imageName} onClikeImage={this.updateId}></ImageGallery>
+        {this.state.showModal && <Modal onClose={this.toogleModal}> <img src={this.state.articls.largeImageURL} alt={this.state.articls.tags} /> </Modal>}
        
         <ToastContainer/>
       </Container>
