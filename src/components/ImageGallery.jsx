@@ -3,6 +3,7 @@ import ImageGalleryItems from "./ImageGalleryItem";
 import axiosImages from "./axiosImages";
 import { ImageGalleryStiled } from "./ImageGallery.stiled";
 import { Button } from "./Button";
+import Loader from "./Loader";
 const namberPerPage = 12;
 
 export class ImageGallery extends Component{
@@ -12,17 +13,22 @@ export class ImageGallery extends Component{
         pageTotal: 0,
         activID: '',
         showModal: false,  
+        erros: null,
+        status: 'idle', //початковий стан простою
     }
-    
-    componentDidUpdate(prevProps,prevState) {
+    componentDidMount() { console.log('componentDidMount ImageGallery') };
+    componentWillUnmount(){ console.log('componentWillUnmount ImageGallery') };
+    componentDidUpdate(prevProps,prevState) { 
         console.log('componentDidUpdate ImageGallery')
+        //if (prevState.status !== this.state.status) {
         if (prevProps.imageName !== this.props.imageName) {
             console.log('Новий запит'); 
-            this.setState({ pageTotal: 0, namberPage: 1,articls: [], activID:'',showModal: false }); 
+            this.setState({ pageTotal: 0,articls: [], activID:'',showModal: false,status:'idle', erros: null,}); //стан loading //namberPage: 1,
             this.searchImage(this.props.imageName, this.state.namberPage, namberPerPage);
         }
         if (prevState.namberPage !== this.state.namberPage) {
             console.log('Зміна сторінки'); 
+            this.setState({ activID:'',status:'idle',}); 
             this.searchImage(this.props.imageName, this.state.namberPage, namberPerPage);
         }
         if (prevState.activID !== this.state.activID) {
@@ -34,12 +40,17 @@ export class ImageGallery extends Component{
 // this.searchImage(this.props.imageName, this.state.namberPage, namberPerPage);
         };
     searchImage = async (imageName, namberPage, namberPer_page) => {
-        let res = await axiosImages(imageName, namberPage, namberPer_page);
+       
+       try { 
+             this.setState({status:'pending',}); 
+            let res = await axiosImages(imageName, namberPage, namberPer_page);
+            
+           // console.log(res.statusText);
         console.log(axiosImages(res));
         const articls = res.data.hits;
         console.log(articls);
         // Отримані данні з сервера збірігаємо в state
-        this.setState({ articls });
+        this.setState({ articls,status:'resolved' });//стан отримані дані з бекендку
         if (namberPage === 1) {
           
             const dataTotal = res.data.total;
@@ -50,29 +61,45 @@ export class ImageGallery extends Component{
                 this.setState({ pageTotal: Math.ceil(datatotalHits / namberPerPage) });
             } else {
                 this.setState({ pageTotal: Math.ceil(dataTotal / namberPerPage) });
+                // this.setState({ articls, });
             }
-        }
-        }; 
+        }   
+      } catch (error) {
+           console.log(error.message);  this.setState({status:'rejected', });//дані з бекендку не отримано, помилка
+       }
+    }; 
+    
     updateNamberPage = namberPage => {
     //Збереження в state пошукового слова запиту на пошук картинки.
        this.setState({namberPage});
     }
+    //Отримання данних про вибрану картинку
     lookImage = event => {
         if (event.target.id !== '') {
             this.setState({ activID: event.target.id,showModal: true,});
-        
-        
         };
     };
+    //Скидання назви картинки пошуку
     resetSearchImage = () => { this.setState({ imageName: '', }); };
+
     render() {
-       // console.log(this.state.articls.length === 0);
-    return (
-        <div> 
+        if (this.state.status === 'idle'){return <div><h2>Для пошуку картинки введить в поле пошуку назву картинки</h2></div> };   
+        if (this.state.status === 'pending') { return <div><Loader></Loader></div> };
+        
+        if (this.state.status === 'resolved'){
+            return (
+            Number(this.state.articls.length) === 0?<div> <h2>Пошук картинки по слову  {this.props.imageName} не два результату</h2></div>:
+            <div> 
             <ImageGalleryStiled onClick={this.lookImage}>
                 <ImageGalleryItems datas={this.state.articls}></ImageGalleryItems>
             </ImageGalleryStiled>
-            {(this.state.namberPage !== this.state.pageTotal && this.state.articls.length !== 0)&& <Button   imageName={this.props.imageName}  onClike={this.updateNamberPage}/>}
-        </div>
-     )}
-}
+            {(this.state.namberPage !== this.state.pageTotal && this.state.articls.length !== 0)&& <Button namberPage={this.state.namberPage}  imageName={this.props.imageName}  onClike={this.updateNamberPage}/>}
+            </div>
+        )
+        };
+
+            if (this.state.status === 'rejected'){return <div> <h2>Помилка {this.props.error} при пошуку картинки по назві - {this.props.imageName} </h2></div> };
+    };
+     
+};
+ 

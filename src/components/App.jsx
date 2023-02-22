@@ -1,6 +1,5 @@
 import { Component } from "react";
 import { Modal } from "./Modal";
-
 import { Searchbar } from "./Searchbar";
 import { ImageGallery } from "./ImageGallery";
 import { ToastContainer } from "react-toastify";
@@ -11,13 +10,11 @@ export class App extends Component {
   state = {
     imageName:'',
     showModal: false,  
-    //activId: '',
-    articls:{},
-   // webformatURL: '',
-   // largeImageURL:'',
+    articls: {},
+    activId: '',
   }
-  
-  componentDidMount() {console.log('componentDidMount App') };
+  componentDidMount() { console.log('componentDidMount App') };
+  componentWillUnmount(){ console.log('componentWillUnmount App') };
   componentDidUpdate(prevProps) {
     console.log('componentDidUpdate App')
     if (prevProps.imageName !== this.props.imageName) {
@@ -43,7 +40,8 @@ export class App extends Component {
     console.log(this.state.articls);
     return (
       <Container>
-        <Searchbar onSubmit={this.updateImage}></Searchbar>      
+        <Searchbar onSubmit={this.updateImage}></Searchbar> 
+       
         <ImageGallery imageName={this.state.imageName} onClikeImage={this.updateId}></ImageGallery>
         {this.state.showModal && <Modal onClose={this.toogleModal}> <img src={this.state.articls.largeImageURL} alt="" /> </Modal>}
        
