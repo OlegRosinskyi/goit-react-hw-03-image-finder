@@ -16,7 +16,7 @@ export class Searchbar extends Component
         event.preventDefault();
         if (this.state.imageName.trim() === '') {toast.error('Введите название картинки' ); return; }
         this.props.onSubmit(this.state.imageName.trim());
-        this.resetSearchImage();
+       //this.resetSearchImage();
        // event.currentTarget.value = '';
     };
     searchImage = (event) => { this.setState({ imageName: event.currentTarget.value }); };
@@ -37,7 +37,8 @@ export class Searchbar extends Component
                 type="text"
                 autocomplete="off"
                 autofocus
-                placeholder="Search images and photos"
+                    placeholder="Search images and photos"
+                    value={this.state.imageName}
                 onChange={this.searchImage}
                         
             />
