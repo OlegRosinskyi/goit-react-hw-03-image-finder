@@ -17,7 +17,7 @@ export class Searchbar extends Component
         event.preventDefault();
         if (this.state.imageName.trim() === '') {toast.error('Введите название картинки' ); return; }
         this.props.onSubmit(this.state.imageName.trim());
-       //this.resetSearchImage();
+       this.resetSearchImage();
        // event.currentTarget.value = '';
     };
     searchImage = (event) => { this.setState({ imageName: event.currentTarget.value }); };
