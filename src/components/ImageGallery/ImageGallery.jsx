@@ -3,7 +3,7 @@ import ImageGalleryItems from "../ImageGalleryItem/ImageGalleryItem";
 import axiosImages from "../axiosImages";
 import { ImageGalleryStiled } from "./ImageGallery.stiled";
 import { Button } from "../Button";
-import Loader from "components/Loader/Loader";
+import Loader from "../Loader/Loader";
 import { BoxButton } from "./ImageGallery.stiled";
 const namberPerPage = 12;
 
