@@ -1,6 +1,6 @@
 import { Component } from "react";
 import ImageGalleryItems from "../ImageGalleryItem/ImageGalleryItem";
-import axiosImages from "../axiosImages";
+import axiosImages from "components/axiosImages";
 import { ImageGalleryStiled } from "./ImageGallery.stiled";
 import { Button } from "../Button";
 import Loader from "../Loader/Loader";
