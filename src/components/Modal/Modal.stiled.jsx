@@ -4,11 +4,11 @@ export const Backdrop = styled.div `display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
-    top: 10px;
+    top: 0px;
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.7);
   
     `
 export const ModalWindous = styled.div `

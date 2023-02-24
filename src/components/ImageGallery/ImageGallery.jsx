@@ -1,9 +1,9 @@
 import { Component } from "react";
-import ImageGalleryItems from "./ImageGalleryItem";
-import axiosImages from "./axiosImages";
+import ImageGalleryItems from "../ImageGalleryItem/ImageGalleryItem";
+import axiosImages from "../axiosImages";
 import { ImageGalleryStiled } from "./ImageGallery.stiled";
-import { Button } from "./Button";
-import Loader from "./Loader";
+import { Button } from "../Button";
+import Loader from "components/Loader/Loader";
 import { BoxButton } from "./ImageGallery.stiled";
 const namberPerPage = 12;
 
@@ -17,28 +17,29 @@ export class ImageGallery extends Component{
         erros: null,
         status: 'idle', //початковий стан простою
     }
-    componentDidMount() { console.log('componentDidMount ImageGallery'); this.setState({ status: 'idle', }); };
+    componentDidMount() {
+        this.setState({ status: 'idle', });
+    };
     componentWillUnmount() {
-        console.log('componentWillUnmount ImageGallery'); this.setState({ status: 'idle', });
-    }
+        this.setState({ status: 'idle', });
+    };
     componentDidUpdate(prevProps,prevState) { 
-        console.log('componentDidUpdate ImageGallery')
-        //if (prevState.status !== this.state.status) {
+       // console.log('componentDidUpdate ImageGallery')
+        
         if (prevProps.imageName !== this.props.imageName) {
-            console.log('Новий запит'); 
+           // console.log('Новий запит'); 
             this.setState({ pageTotal: 0,articls: [], activID:'',showModal: false,status: 'idle', erros: null,}); //стан loading //namberPage: 1,
             this.searchImage(this.props.imageName, this.state.namberPage, namberPerPage);
         }
         if (prevState.namberPage !== this.state.namberPage) {
-            console.log('Зміна сторінки'); 
+           // console.log('Зміна сторінки'); 
             this.setState({ activID:'',status: 'idle'}); 
             this.searchImage(this.props.imageName, this.state.namberPage, namberPerPage);
         }
         if (prevState.activID !== this.state.activID) {
-            console.log('Зміна активного id'); 
-            //console.log(this.state.articls.Number(this.state.activID)); 
-           // console.log(Number(this.state.activID));
-           this.props.onClikeImage(this.state.showModal,this.state.articls.find(articl=> articl.id === Number(this.state.activID))); 
+           // console.log('Зміна активного id'); 
+            this.props.onClikeImage(this.state.showModal, this.state.articls.find(articl => articl.id === Number(this.state.activID))); 
+            this.setState({ showModal: false,});
         }
 // this.searchImage(this.props.imageName, this.state.namberPage, namberPerPage);
         };
@@ -47,24 +48,22 @@ export class ImageGallery extends Component{
        try { 
              this.setState({status:'pending',}); 
             let res = await axiosImages(imageName, namberPage, namberPer_page);
-            
-           // console.log(res.statusText);
-        console.log(axiosImages(res));
-        const articls = res.data.hits;
-        console.log(articls);
-        // Отримані данні з сервера збірігаємо в state
-        this.setState({ articls,status:'resolved' });//стан отримані дані з бекендку
-        if (namberPage === 1) {
-          
+            // console.log(res.statusText);
+            //console.log(axiosImages(res));
+            const articls = res.data.hits;
+           // console.log(articls);
+        // Отримані данні з сервера зберігаємо в state
+           
+           if (namberPage !== 1) this.setState((prevState) => ({ articls: prevState.articls.concat(articls) }));
+           else this.setState({articls, status:'resolved' });
+           this.setState({ status: 'resolved' });//стан отримані дані з бекендку
+            if (namberPage === 1) {
             const dataTotal = res.data.total;
-            console.log(dataTotal);
             const datatotalHits = res.data.totalHits;
-            console.log(datatotalHits);
             if (dataTotal > datatotalHits) {
                 this.setState({ pageTotal: Math.ceil(datatotalHits / namberPerPage) });
             } else {
                 this.setState({ pageTotal: Math.ceil(dataTotal / namberPerPage) });
-                // this.setState({ articls, });
             }
         }   
       } catch (error) {
@@ -79,6 +78,7 @@ export class ImageGallery extends Component{
     //Отримання данних про вибрану картинку
     lookImage = event => {
         if (event.target.id !== '') {
+           // console.log('картка вибрана');
             this.setState({ activID: event.target.id,showModal: true,});
         };
     };
@@ -87,7 +87,7 @@ export class ImageGallery extends Component{
 
     render() {
         if (this.state.status === 'idle'){return <BoxButton><h2>Для пошуку картинки введить в поле пошуку назву картинки</h2></BoxButton> };   
-        if (this.state.status === 'pending') { return <BoxButton><Loader></Loader></BoxButton> };
+       
         
         if (this.state.status === 'resolved'){
             return (
@@ -101,7 +101,9 @@ export class ImageGallery extends Component{
         )
         };
 
-            if (this.state.status === 'rejected'){return <div> <h2>Помилка {this.props.error} при пошуку картинки по назві - {this.props.imageName} </h2></div> };
+        if (this.state.status === 'rejected') { return <div> <h2>Помилка {this.props.error} при пошуку картинки по назві - {this.props.imageName} </h2></div> };
+        if (this.state.status === 'pending') { return <BoxButton><Loader></Loader></BoxButton> };
+       
     };
      
 };

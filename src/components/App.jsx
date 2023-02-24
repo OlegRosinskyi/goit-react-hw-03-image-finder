@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Modal } from "./Modal";
+import { Modal } from "./Modal/Modal";
 import { Searchbar } from "./Searchbar";
 import { ImageGallery } from "./ImageGallery";
 import { ToastContainer } from "react-toastify";
@@ -13,12 +13,12 @@ export class App extends Component {
     articls: [{}],
    // activId: '',
   }
-  componentDidMount() { console.log('componentDidMount App') };
-  componentWillUnmount(){ console.log('componentWillUnmount App') };
+//  componentDidMount() { console.log('componentDidMount App') };
+//  componentWillUnmount(){ console.log('componentWillUnmount App') };
   componentDidUpdate(prevProps) {
-    console.log('componentDidUpdate App')
+   // console.log('componentDidUpdate App')
     if (prevProps.imageName !== this.props.imageName) {
-            console.log('componentDidUpdate App Новий запит'); 
+           // console.log('componentDidUpdate App Новий запит'); 
             this.setState({ articls: [{}] }); 
     }
   };
@@ -37,7 +37,7 @@ export class App extends Component {
   }
   
   render() {
-    console.log(this.state.articls);
+   // console.log(this.state.articls);
     return (
       <Container>
         <Searchbar onSubmit={this.updateImage}></Searchbar> 
