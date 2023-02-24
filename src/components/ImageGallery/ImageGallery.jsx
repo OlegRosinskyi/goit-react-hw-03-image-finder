@@ -1,9 +1,9 @@
 import { Component } from "react";
-import ImageGalleryItems from "../ImageGalleryItem/ImageGalleryItem";
+import ImageGalleryItems from "components/ImageGalleryItem/ImageGalleryItem";
 import axiosImages from "components/axiosImages";
 import { ImageGalleryStiled } from "./ImageGallery.stiled";
-import { Button } from "../Button";
-import Loader from "../Loader/Loader";
+import { Button } from "components/Button";
+import Loader from "components/Loader/Loader";
 import { BoxButton } from "./ImageGallery.stiled";
 const namberPerPage = 12;
 
