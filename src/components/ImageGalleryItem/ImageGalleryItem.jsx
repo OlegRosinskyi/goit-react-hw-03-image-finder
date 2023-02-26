@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { ImageGalleryItemStiled } from "./ImageGalleryItem.stiled";
 import { ImageStiled } from "./ImageGalleryItem.stiled";
 const ImageGalleryItems = ({ datas }) =>
@@ -10,3 +11,6 @@ const ImageGalleryItems = ({ datas }) =>
      )
 }
 export default ImageGalleryItems;
+ImageGalleryItems.propTypes = {
+    datas:PropTypes.array,
+}

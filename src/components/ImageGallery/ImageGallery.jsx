@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from 'prop-types';
 import ImageGalleryItems from "components/ImageGalleryItem/ImageGalleryItem";
 import axiosImages from "components/axiosImages";
 import { ImageGalleryStiled } from "./ImageGallery.stiled";
@@ -107,4 +108,8 @@ export class ImageGallery extends Component{
     };
      
 };
- 
+ Button.propTypes = {
+    error:PropTypes.string,
+    imageName: PropTypes.string,
+     updateNamberPage: PropTypes.func, 
+}

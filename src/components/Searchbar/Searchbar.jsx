@@ -1,10 +1,13 @@
 import { Component } from "react";
+import PropTypes from 'prop-types';
 import {AiOutlineSearch} from "react-icons/ai";
 import { SearchbarInput } from "./Searchbar.stiled";
 import { SearchbarBox } from "./Searchbar.stiled";
 import { SearchbarForm } from "./Searchbar.stiled";
 import { Searchbarbutton } from "./Searchbar.stiled";
 import { toast } from "react-toastify";
+
+
 export class Searchbar extends Component
 {
     state = {
@@ -46,4 +49,6 @@ export class Searchbar extends Component
         
      )}
 }
- 
+ Searchbar.propTypes = {
+    onChange: PropTypes.func, 
+}

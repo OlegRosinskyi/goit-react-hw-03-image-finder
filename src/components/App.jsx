@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from 'prop-types';
 import { Modal } from "./Modal/Modal";
 import { Searchbar } from "./Searchbar";
 import { ImageGallery } from "./ImageGallery";
@@ -49,4 +50,8 @@ export class App extends Component {
     );
   }
 };
-// <button type="button" onClick={this.toogleModal}> Oupen modal windous</button>
+App.propTypes = {
+    onClikeImage:PropTypes.func,
+    imageName: PropTypes.string,
+    onClose: PropTypes.func, 
+}

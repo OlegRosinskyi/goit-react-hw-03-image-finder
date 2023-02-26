@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from 'prop-types';
 import { ButtonStiled } from "./Button.stiled";
 export class Button extends Component{
      
@@ -15,4 +16,7 @@ export class Button extends Component{
         </> 
      )}
 }
- 
+ Button.propTypes = {
+    onClike:PropTypes.func,
+   
+}

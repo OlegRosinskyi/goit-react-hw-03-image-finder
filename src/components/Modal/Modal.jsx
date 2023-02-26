@@ -2,9 +2,11 @@
 import { PureComponent } from "react";
 // створити портал 
 import { createPortal } from "react-dom";
+import PropTypes from 'prop-types';
 import { Backdrop } from "./Modal.stiled";
 import { ModalWindous } from "./Modal.stiled";
 const modulRoot = document.querySelector('#modal-root');
+
     export class Modal extends PureComponent {
  
         componentDidMount() {
@@ -37,4 +39,7 @@ const modulRoot = document.querySelector('#modal-root');
             </>,modulRoot)       
     }
 };
- 
+ PureComponent.propTypes = {
+    children:PropTypes.array,
+    
+}
